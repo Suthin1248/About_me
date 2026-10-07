@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกี่ยวกับฉัน | ว่าที่ครูคอมพิวเตอร์</title>
+    
+    <!-- นำเข้าฟอนต์ Google Fonts เพื่อความสวยงาม -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- นำเข้า FontAwesome สำหรับแสดงไอคอนโซเชียลมีเดีย -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* CSS รีเซ็ตค่าเริ่มต้นและกำหนดฟอนต์ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* โครงสร้างคอนเทนเนอร์หลักให้อยู่กึ่งกลาง */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ส่วนหัว (Header) */
+        header {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6);
+            color: white;
+            border-radius: 0 0 2rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* ส่วนเนื้อหา (Sections) */
+        section {
+            background: white;
+            margin-top: 2rem;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #4f46e5;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: #4b5563;
+        }
+
+        /* ระบบ Grid สำหรับส่วนทักษะความสามารถ */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .skill-card h3 {
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-card ul {
+            list-style-position: inside;
+            color: #64748b;
+        }
+
+        /* =========================================
+           CSS ใหม่ สำหรับส่วนติดต่อ (Social Icons) 
+           ========================================= */
+        #contact {
+            text-align: center; /* จัดให้หัวข้อและไอคอนอยู่กึ่งกลาง */
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem; /* ระยะห่างระหว่างไอคอน */
+            margin-top: 2rem;
+            flex-wrap: wrap; /* ให้ปัดตกบรรทัดใหม่ถ้าย่อจอมือถือ */
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%; /* ทำให้เป็นวงกลม */
+            background-color: #f1f5f9;
+            color: #475569;
+            font-size: 1.8rem;
+            text-decoration: none; /* เอาขีดเส้นใต้ออก */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease; /* แอนิเมชันความสมูทเวลาชี้เมาส์ */
+        }
+
+        /* เอฟเฟกต์เมื่อเอาเมาส์ชี้ (Hover) - ให้ไอคอนลอยขึ้นและเปลี่ยนสี */
+        .social-btn:hover {
+            transform: translateY(-5px);
+            color: white;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* สีประจำแบรนด์เมื่อ Hover */
+        .social-btn.email:hover { background-color: #ea4335; }
+        .social-btn.facebook:hover { background-color: #1877f2; }
+        .social-btn.line:hover { background-color: #00c300; }
+        .social-btn.instagram:hover {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+        .social-btn.github:hover { background-color: #333333; }
+
+        /* ส่วนท้าย (Footer) */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            color: #9ca3af;
+        }
+
+        /* Responsive Design สำหรับมือถือ */
+        @media (max-width: 768px) {
+            header {
+                padding: 3rem 1rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            .social-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ส่วนหัว: รูปโปรไฟล์และชื่อ -->
+    <header>
+        <div class="container">
+            <img src="https://scontent.fphs2-1.fna.fbcdn.net/v/t39.30808-6/634476985_2042603503136591_5261962388686146882_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=UTYdyBmf5JkQ7kNvwEQC7u1&_nc_oc=Adpw9xZL3F489JC-H0YAcy2Z1_m6gI_gKFHummT7dHQWf7LvKrkHEozmPVp4J3sqPSU&_nc_zt=23&_nc_ht=scontent.fphs2-1.fna&_nc_gid=uwrSjGkUGKFdswXBCLlm7Q&_nc_ss=7b2a8&oh=00_AQO0PzwX2CS96V-g-W3KHL6o1Rdn4hvAOuziVWKruz5AAw&oe=6ACB6FC2"
+                alt="รูปโปรไฟล์" class="profile-img">
+            <h1>สวัสดีครับ, ผม นายสุทิน ชะนิดไทย</h1>
+            <p>นักศึกษา สาขาคอมพิวเตอร์และเทคโนโลยีดิจิทัลเพื่อการศึกษา</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Section 1: แนะนำตัว -->
+        <section id="about">
+            <h2>เกี่ยวกับฉัน</h2>
+            <p class="about-text">
+                ปัจจุบันผมเป็นนักศึกษาชั้นปีที่ 3 คณะครุศาสตร์ มหาวิทยาลัยราชภัฏอุตรดิตถ์
+                เป้าหมายสูงสุดของผมคือการได้เป็น <strong>ครูสอนรายวิชาคอมพิวเตอร์และบรรจุเป็นข้าราชการครู</strong>
+                ผมมีความชอบในการผสมผสานเทคโนโลยีสมัยใหม่เข้ากับการจัดการเรียนการสอน เช่น การจัดการเรียนรู้แบบ 5E
+                และการประเมินผลตามสภาพจริง เพื่อพัฒนาศักยภาพของผู้เรียนในยุคดิจิทัล
+            </p>
+        </section>
+
+        <!-- Section 2: ทักษะและความสามารถ -->
+        <section id="skills">
+            <h2>ทักษะและความสามารถ</h2>
+            <div class="skills-grid">
+
+                <!-- Card 1: Web & App Dev -->
+                <div class="skill-card">
+                    <h3>💻 Web & App Development</h3>
+                    <ul>
+                        <li>Next.js, React, TypeScript</li>
+                        <li>Tailwind CSS, HTML5</li>
+                        <li>PostgreSQL, Prisma ORM</li>
+                        <li>Google AppSheet</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Hardware & Network -->
+                <div class="skill-card">
+                    <h3>🔌 Hardware & Network</h3>
+                    <ul>
+                        <li>การประกอบและซ่อมบำรุง PC</li>
+                        <li>MikroTik & Network Admin</li>
+                        <li>PXE Boot & ระบบ Multicast</li>
+                        <li>Microcontroller (Arduino, ESP32)</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3: Media & Broadcasting -->
+                <div class="skill-card">
+                    <h3>🎥 Digital Media Production</h3>
+                    <ul>
+                        <li>Live Stream & OB Switching</li>
+                        <li>Adobe Lightroom Classic</li>
+                        <li>การตกแต่งกราฟิกด้วย MS PowerPoint</li>
+                        <li>AI Image Generation</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section 3: ติดต่อ (อัปเดตใหม่เป็นแบบไอคอน) -->
+        <section id="contact">
+            <h2>ช่องทางการติดต่อ</h2>
+            <div class="social-links">
+                
+                <!-- Email -->
+                <a href="Suthin7039@gmail.com" class="social-btn email" title="ส่งอีเมลหาฉัน" target="_blank">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                
+                <!-- Facebook: แทนที่เครื่องหมาย # ด้วยลิงก์เฟซบุ๊กของคุณ -->
+                <a href="https://www.facebook.com/suthin.chanidthai.5/" class="social-btn facebook" title="Facebook" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                
+                <!-- Line: แทนที่เครื่องหมาย # ด้วยลิงก์เพิ่มเพื่อนของ Line (เช่น https://line.me/ti/p/ไอดีของคุณ) -->
+                <a href="#" class="social-btn line" title="Line" target="_blank">
+                    <i class="fab fa-line"></i>
+                </a>
+                
+                <!-- Instagram: แทนที่เครื่องหมาย # ด้วยลิงก์ IG ของคุณ -->
+                <a href="#" class="social-btn instagram" title="Instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                
+                <!-- Github: แทนที่เครื่องหมาย # ด้วยลิงก์ Github ของคุณ -->
+                <a href="https://github.com/Suthin1248" class="social-btn github" title="GitHub" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- ส่วนท้าย -->
+    <footer>
+        <p>&copy; 2026 นายสุทิน ชะนิดไทย. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>
