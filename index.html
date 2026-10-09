@@ -5,124 +5,315 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เกี่ยวกับฉัน | ว่าที่ครูคอมพิวเตอร์</title>
-    
-    <!-- นำเข้าฟอนต์ Google Fonts เพื่อความสวยงาม -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- นำเข้า FontAwesome สำหรับแสดงไอคอนโซเชียลมีเดีย -->
+
+    <!-- นำเข้าฟอนต์ Google Fonts (Kanit สำหรับภาษาไทย และ Fira Code สำหรับลูกเล่นโค้ดดิ้ง) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- นำเข้า FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* CSS รีเซ็ตค่าเริ่มต้นและกำหนดฟอนต์ */
+        /* =========================================
+           CSS Variables (สำหรับตั้งค่าสี Dark/Light Mode)
+           ========================================= */
+        :root {
+            --bg-color: #f8fafc;
+            --pattern-color: rgba(15, 23, 42, 0.05);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --card-bg: #ffffff;
+            --primary-color: #3b82f6;
+            /* Blue Tech */
+            --accent-color: #8b5cf6;
+            /* Purple Streamer */
+            --border-color: #e2e8f0;
+            --terminal-header: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --glow: 0 0 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* เมื่อเปิดโหมดมืด (Dark Mode) */
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --pattern-color: rgba(255, 255, 255, 0.03);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --card-bg: #1e293b;
+            --primary-color: #60a5fa;
+            --accent-color: #a78bfa;
+            --border-color: #334155;
+            --terminal-header: #0b1120;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            --glow: 0 0 20px rgba(96, 165, 250, 0.2);
+        }
+
+        /* CSS รีเซ็ตค่าเริ่มต้น */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Kanit', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Kanit', sans-serif;
             line-height: 1.6;
+            /* ลายพื้นหลังสไตล์สายเทค (Dot Grid Pattern) */
+            background-image: radial-gradient(var(--pattern-color) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        /* โครงสร้างคอนเทนเนอร์หลักให้อยู่กึ่งกลาง */
         .container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 2rem;
         }
 
-        /* ส่วนหัว (Header) */
+        /* =========================================
+           ส่วนควบคุมด้านบน (Top Nav & Theme Toggle)
+           ========================================= */
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem 2rem;
+        }
+
+        #theme-toggle {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: 'Kanit', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        #theme-toggle:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--glow);
+        }
+
+        /* =========================================
+           ส่วนหัว (Header) - ปรับใหม่ให้กะทัดรัด รูปเด่น
+           ========================================= */
         header {
-            text-align: center;
-            padding: 4rem 0;
-            background: linear-gradient(135deg, #4f46e5, #3b82f6);
-            color: white;
-            border-radius: 0 0 2rem 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            padding: 2rem 0 3rem;
+            flex-wrap: wrap;
+            text-align: left;
+        }
+
+        .profile-wrapper {
+            position: relative;
         }
 
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            border: 4px solid white;
             object-fit: cover;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: 4px solid var(--bg-color);
+            box-shadow: 0 0 0 4px var(--primary-color), var(--glow);
+            /* ขอบเรืองแสงแบบเทค */
+            padding: 4px;
+            background-color: var(--bg-color);
         }
 
-        header h1 {
+        /* ป้าย LIVE แบบสตรีมเมอร์ */
+        .live-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: #ef4444;
+            /* สีแดงสด */
+            color: white;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 2px 10px;
+            border-radius: 20px;
+            border: 2px solid var(--bg-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        .header-text h1 {
             font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.2rem;
+            color: var(--text-main);
         }
 
-        header p {
+        .header-text p {
             font-size: 1.2rem;
+            color: var(--text-muted);
             font-weight: 300;
         }
 
-        /* ส่วนเนื้อหา (Sections) */
-        section {
-            background: white;
-            margin-top: 2rem;
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        /* ลูกเล่นแท็กโค้ด <h1> */
+        .code-tag {
+            color: var(--primary-color);
+            font-family: 'Fira Code', monospace;
+            opacity: 0.8;
+            font-size: 2rem;
         }
 
-        h2 {
-            color: #4f46e5;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
+        /* =========================================
+           ส่วนเนื้อหา (Sections)
+           ========================================= */
+        section {
+            background: var(--card-bg);
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            /* สำหรับกรอบ Terminal */
+        }
+
+        /* หัวข้อ Section สไตล์ Terminal */
+        .section-header {
+            background: var(--terminal-header);
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mac-btns {
+            display: flex;
+            gap: 6px;
+            margin-right: 15px;
+        }
+
+        .mac-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .close {
+            background: #ff5f56;
+        }
+
+        .min {
+            background: #ffbd2e;
+        }
+
+        .max {
+            background: #27c93f;
+        }
+
+        .section-header h2 {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
         }
 
         .about-text {
             font-size: 1.1rem;
-            color: #4b5563;
+            color: var(--text-muted);
         }
 
         /* ระบบ Grid สำหรับส่วนทักษะความสามารถ */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            /* บังคับให้แบ่งเป็น 3 คอลัมน์เท่าๆ กันบนหน้าจอคอมพิวเตอร์ */
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
         }
 
+        /* ========================================= */
+        /* และเพิ่ม/แก้ไขส่วน Responsive สำหรับมือถือด้านล่างสุดของ CSS */
+        /* ========================================= */
+        @media (max-width: 768px) {
+            .skills-grid {
+                /* เมื่อเปิดบนมือถือ จะแสดงผลแค่คอลัมน์เดียว เรียงต่อกันลงมา */
+                grid-template-columns: 1fr;
+            }
+        }
+
         .skill-card {
-            background: #f8fafc;
+            background: var(--bg-color);
             padding: 1.5rem;
             border-radius: 0.75rem;
-            border-left: 4px solid #3b82f6;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+            border-left-color: var(--primary-color);
         }
 
         .skill-card h3 {
-            color: #1e293b;
-            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .skill-card ul {
-            list-style-position: inside;
-            color: #64748b;
+            list-style-type: none;
+            /* เอาจุดเดิมออก */
+            color: var(--text-muted);
+        }
+
+        .skill-card ul li {
+            margin-bottom: 0.3rem;
+        }
+
+        .skill-card ul li::before {
+            content: "▹";
+            /* ใช้ลูกศรสไตล์โค้ดดิ้ง */
+            color: var(--primary-color);
+            margin-right: 8px;
+            font-family: 'Fira Code', monospace;
         }
 
         /* =========================================
-           CSS ใหม่ สำหรับส่วนติดต่อ (Social Icons) 
+           ช่องทางการติดต่อ (Social Icons)
            ========================================= */
-        #contact {
-            text-align: center; /* จัดให้หัวข้อและไอคอนอยู่กึ่งกลาง */
-        }
-
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 1.5rem; /* ระยะห่างระหว่างไอคอน */
-            margin-top: 2rem;
-            flex-wrap: wrap; /* ให้ปัดตกบรรทัดใหม่ถ้าย่อจอมือถือ */
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .social-btn {
@@ -131,53 +322,72 @@
             justify-content: center;
             width: 60px;
             height: 60px;
-            border-radius: 50%; /* ทำให้เป็นวงกลม */
-            background-color: #f1f5f9;
-            color: #475569;
+            border-radius: 12px;
+            /* เปลี่ยนจากวงกลมเป็นสี่เหลี่ยมขอบมน (Squircle) สไตล์ App */
+            background-color: var(--bg-color);
+            color: var(--text-main);
             font-size: 1.8rem;
-            text-decoration: none; /* เอาขีดเส้นใต้ออก */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease; /* แอนิเมชันความสมูทเวลาชี้เมาส์ */
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* เด้งแบบสมูท */
         }
 
-        /* เอฟเฟกต์เมื่อเอาเมาส์ชี้ (Hover) - ให้ไอคอนลอยขึ้นและเปลี่ยนสี */
         .social-btn:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.05);
             color: white;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
         }
 
-        /* สีประจำแบรนด์เมื่อ Hover */
-        .social-btn.email:hover { background-color: #ea4335; }
-        .social-btn.facebook:hover { background-color: #1877f2; }
-        .social-btn.line:hover { background-color: #00c300; }
+        .social-btn.email:hover {
+            background-color: #ea4335;
+            box-shadow: 0 10px 20px rgba(234, 67, 53, 0.4);
+        }
+
+        .social-btn.facebook:hover {
+            background-color: #1877f2;
+            box-shadow: 0 10px 20px rgba(24, 119, 242, 0.4);
+        }
+
+        .social-btn.line:hover {
+            background-color: #00c300;
+            box-shadow: 0 10px 20px rgba(0, 195, 0, 0.4);
+        }
+
         .social-btn.instagram:hover {
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 10px 20px rgba(188, 24, 136, 0.4);
         }
-        .social-btn.github:hover { background-color: #333333; }
+
+        .social-btn.github:hover {
+            background-color: #333333;
+            box-shadow: 0 10px 20px rgba(51, 51, 51, 0.4);
+        }
 
         /* ส่วนท้าย (Footer) */
         footer {
             text-align: center;
             padding: 2rem;
-            margin-top: 2rem;
-            color: #9ca3af;
+            color: var(--text-muted);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
         }
 
-        /* Responsive Design สำหรับมือถือ */
+        /* Responsive Design */
         @media (max-width: 768px) {
             header {
-                padding: 3rem 1rem;
+                text-align: center;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 0 2rem;
             }
 
-            section {
+            .header-text h1 {
+                font-size: 2rem;
+            }
+
+            .section-content {
                 padding: 1.5rem;
-            }
-
-            .social-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
             }
         }
     </style>
@@ -185,107 +395,203 @@
 
 <body>
 
-    <!-- ส่วนหัว: รูปโปรไฟล์และชื่อ -->
-    <header>
-        <div class="container">
-            <img src="https://scontent.fphs2-1.fna.fbcdn.net/v/t39.30808-6/634476985_2042603503136591_5261962388686146882_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=UTYdyBmf5JkQ7kNvwEQC7u1&_nc_oc=Adpw9xZL3F489JC-H0YAcy2Z1_m6gI_gKFHummT7dHQWf7LvKrkHEozmPVp4J3sqPSU&_nc_zt=23&_nc_ht=scontent.fphs2-1.fna&_nc_gid=uwrSjGkUGKFdswXBCLlm7Q&_nc_ss=7b2a8&oh=00_AQO0PzwX2CS96V-g-W3KHL6o1Rdn4hvAOuziVWKruz5AAw&oe=6ACB6FC2"
-                alt="รูปโปรไฟล์" class="profile-img">
-            <h1>สวัสดีครับ, ผม นายสุทิน ชะนิดไทย</h1>
-            <p>นักศึกษา สาขาคอมพิวเตอร์และเทคโนโลยีดิจิทัลเพื่อการศึกษา</p>
-        </div>
-    </header>
+    <!-- ปุ่มสลับโหมดมืด/สว่าง -->
+    <div class="top-nav">
+        <button id="theme-toggle">
+            <i class="fas fa-moon"></i> โหมดมืด
+        </button>
+    </div>
 
     <div class="container">
-        <!-- Section 1: แนะนำตัว -->
+        <!-- ส่วนหัว: รูปโปรไฟล์แบบเน้น และข้อมูลชื่อ -->
+        <header>
+            <div class="profile-wrapper">
+                <img src="https://scontent.fphs2-1.fna.fbcdn.net/v/t39.30808-6/634476985_2042603503136591_5261962388686146882_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=UTYdyBmf5JkQ7kNvwEQC7u1&_nc_oc=Adpw9xZL3F489JC-H0YAcy2Z1_m6gI_gKFHummT7dHQWf7LvKrkHEozmPVp4J3sqPSU&_nc_zt=23&_nc_ht=scontent.fphs2-1.fna&_nc_gid=uwrSjGkUGKFdswXBCLlm7Q&_nc_ss=7b2a8&oh=00_AQO0PzwX2CS96V-g-W3KHL6o1Rdn4hvAOuziVWKruz5AAw&oe=6ACB6FC2"
+                    alt="รูปโปรไฟล์" class="profile-img">
+                <span class="live-badge"><i class="fas fa-video"></i> LIVE</span>
+            </div>
+            <div class="header-text">
+                <h1><span class="code-tag">&lt;</span>นายสุทิน ชะนิดไทย<span class="code-tag">/&gt;</span></h1>
+                <p><i class="fas fa-terminal"></i> นักศึกษา สาขาคอมพิวเตอร์และเทคโนโลยีดิจิทัลเพื่อการศึกษา</p>
+            </div>
+        </header>
+
+        <!-- Section 1: แนะนำตัว (ดีไซน์กรอบ Terminal) -->
         <section id="about">
-            <h2>เกี่ยวกับฉัน</h2>
-            <p class="about-text">
-                ปัจจุบันผมเป็นนักศึกษาชั้นปีที่ 3 คณะครุศาสตร์ มหาวิทยาลัยราชภัฏอุตรดิตถ์
-                เป้าหมายสูงสุดของผมคือการได้เป็น <strong>ครูสอนรายวิชาคอมพิวเตอร์และบรรจุเป็นข้าราชการครู</strong>
-                ผมมีความชอบในการผสมผสานเทคโนโลยีสมัยใหม่เข้ากับการจัดการเรียนการสอน เช่น การจัดการเรียนรู้แบบ 5E
-                และการประเมินผลตามสภาพจริง เพื่อพัฒนาศักยภาพของผู้เรียนในยุคดิจิทัล
-            </p>
+            <div class="section-content">
+                <p class="about-text">
+                    สวัสดีครับ ผม "สุทิน" หรือจะเรียก "ธันวา" ชื่อเล่นของผม ตอนนี้กำลังเรียนครูคอมพิวเตอร์ ปี 3
+                    ที่ราชภัฏอุตรดิตถ์ครับ
+                    เป้าหมายของผมคือการสอบบรรจุเป็นข้าราชการครู
+                    <br><br>
+                    ถ้าให้แนะนำตัวแบบสั้นๆ ผมน่าจะเป็นคนที่ชอบทำงานไอทีแบบ "ครบวงจร" ครับ
+                    คือไม่ได้อยู่แค่หน้าจอเพื่อเขียนโค้ดทำเว็บแอปพลิเคชันอย่างเดียว แต่ผมยังชอบงานสายฮาร์ดแวร์ด้วย
+                    ไม่ว่าจะเป็นการประกอบคอมพิวเตอร์ เซ็ตอัพระบบเครือข่าย
+                    หรือแม้แต่การต่อวงจรและเขียนโปรแกรมควบคุมไมโครคอนโทรลเลอร์ (Microcontroller)
+                    เพื่อสร้างชิ้นงานอิเล็กทรอนิกส์ต่างๆ ครับ
+                    <br><br>
+                    นอกจากฝั่งโปรแกรมเมอร์และฮาร์ดแวร์แล้ว ผมยังมีอีกมุมที่ชอบทำงานเบื้องหลังครับ
+                    เวลาคณะหรือมหาลัยมีกิจกรรม ผมมักจะเข้าไปช่วยทำระบบ Live Stream คุมหน้าจอ OB
+                    และจัดการพวกสื่อกราฟิกต่างๆ อยู่เสมอ
+                    <br>
+                    ที่ผมพยายามเรียนรู้และฝึกฝนตัวเองในหลายๆ ด้าน เพราะผมคิดว่าในอนาคตตอนที่ได้ไปสอนเด็กๆ
+                    ผมจะไม่ได้สอนแค่ทฤษฎีในหนังสือ แต่สามารถเอาประสบการณ์ทำงานจริงๆ ทั้งงานซอฟต์แวร์ ฮาร์ดแวร์
+                    และงานสื่อ ไปถ่ายทอดให้พวกเขาเห็นภาพและลงมือทำได้จริงๆ ครับ
+                </p>
+            </div>
         </section>
 
         <!-- Section 2: ทักษะและความสามารถ -->
         <section id="skills">
-            <h2>ทักษะและความสามารถ</h2>
-            <div class="skills-grid">
-
-                <!-- Card 1: Web & App Dev -->
-                <div class="skill-card">
-                    <h3>💻 Web & App Development</h3>
-                    <ul>
-                        <li>Next.js, React, TypeScript</li>
-                        <li>Tailwind CSS, HTML5</li>
-                        <li>PostgreSQL, Prisma ORM</li>
-                        <li>Google AppSheet</li>
-                    </ul>
+            <div class="section-header">
+                <div class="mac-btns">
+                    <div class="mac-btn close"></div>
+                    <div class="mac-btn min"></div>
+                    <div class="mac-btn max"></div>
                 </div>
+                <h2>~/skills.json</h2>
+            </div>
+            <div class="section-content">
+                <div class="skills-grid">
 
-                <!-- Card 2: Hardware & Network -->
-                <div class="skill-card">
-                    <h3>🔌 Hardware & Network</h3>
-                    <ul>
-                        <li>การประกอบและซ่อมบำรุง PC</li>
-                        <li>MikroTik & Network Admin</li>
-                        <li>PXE Boot & ระบบ Multicast</li>
-                        <li>Microcontroller (Arduino, ESP32)</li>
-                    </ul>
+                    <!-- Card 1: Web & App Dev -->
+                    <div class="skill-card">
+                        <h3><i class="fas fa-laptop-code" style="color: #3b82f6;"></i> Web & App Dev</h3>
+                        <ul>
+                            <li>Next.js, React, TypeScript</li>
+                            <li>Tailwind CSS, HTML5</li>
+                            <li>PostgreSQL, Prisma ORM</li>
+                            <li>Google AppSheet</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 2: Hardware & Network -->
+                    <div class="skill-card">
+                        <h3><i class="fas fa-server" style="color: #10b981;"></i> Hardware & Network</h3>
+                        <ul>
+                            <li>การประกอบและซ่อมบำรุง PC</li>
+                            <li>MikroTik & Network Admin</li>
+                            <li>PXE Boot & ระบบ Multicast</li>
+                            <li>Microcontroller (Arduino, ESP32)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 3: Media & Broadcasting -->
+                    <div class="skill-card">
+                        <h3><i class="fas fa-headset" style="color: #8b5cf6;"></i> Media & Broadcast</h3>
+                        <ul>
+                            <li>Live Stream & OB Switching</li>
+                            <li>Adobe Lightroom Classic</li>
+                            <li>การตกแต่งกราฟิกด้วย MS PowerPoint</li>
+                            <li>AI Image Generation</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 4: Data & Educational Tech -->
+                    <div class="skill-card">
+                        <h3><i class="fas fa-chart-pie" style="color: #f59e0b;"></i> Data & EdTech</h3>
+                        <ul>
+                            <li>Google Looker Studio (Dashboard)</li>
+                            <li>การวิเคราะห์ข้อมูลด้วย SPSS</li>
+                            <li>การออกแบบสื่อ AR & AI Prompting</li>
+                            <li>การออกแบบการเรียนรู้ (5E, PBL)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 5: AI & Machine Learning (เพิ่มใหม่) -->
+                    <div class="skill-card">
+                        <h3><i class="fas fa-brain" style="color: #ec4899;"></i> AI & Machine Learning</h3>
+                        <ul>
+                            <li>Computer Vision AI Models</li>
+                            <li>PyTorch & Google Colab</li>
+                            <li>Teachable Machine</li>
+                            <li>Model Weights Management</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 6: Database Administration (เพิ่มใหม่) -->
+                    <div class="skill-card">
+                        <h3><i class="fas fa-database" style="color: #14b8a6;"></i> Database Admin</h3>
+                        <ul>
+                            <li>Microsoft Access & SQL Development</li>
+                            <li>Database Design & Query Logic</li>
+                            <li>Table Joins & Subqueries</li>
+                            <li>ระบบคำนวณผลการเรียน (GPA Logic)</li>
+                        </ul>
+                    </div>
+
                 </div>
-
-                <!-- Card 3: Media & Broadcasting -->
-                <div class="skill-card">
-                    <h3>🎥 Digital Media Production</h3>
-                    <ul>
-                        <li>Live Stream & OB Switching</li>
-                        <li>Adobe Lightroom Classic</li>
-                        <li>การตกแต่งกราฟิกด้วย MS PowerPoint</li>
-                        <li>AI Image Generation</li>
-                    </ul>
-                </div>
-
             </div>
         </section>
 
-        <!-- Section 3: ติดต่อ (อัปเดตใหม่เป็นแบบไอคอน) -->
+        <!-- Section 3: ติดต่อ -->
         <section id="contact">
-            <h2>ช่องทางการติดต่อ</h2>
-            <div class="social-links">
-                
-                <!-- Email -->
-                <a href="https://mail.google.com/mail/u/0/?fs=1&to=Suthin7039@email.com" class="social-btn email" title="ส่งอีเมลหาฉัน" target="_blank">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                
-                <!-- Facebook: แทนที่เครื่องหมาย # ด้วยลิงก์เฟซบุ๊กของคุณ -->
-                <a href="https://www.facebook.com/suthin.chanidthai.5/" class="social-btn facebook" title="Facebook" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                
-                <!-- Line: แทนที่เครื่องหมาย # ด้วยลิงก์เพิ่มเพื่อนของ Line (เช่น https://line.me/ti/p/ไอดีของคุณ) -->
-                <a href="https://line.me/ti/p/0w7UWffuIp" class="social-btn line" title="Line" target="_blank">
-                    <i class="fab fa-line"></i>
-                </a>
-                
-                <!-- Instagram: แทนที่เครื่องหมาย # ด้วยลิงก์ IG ของคุณ -->
-                <a href="https://www.instagram.com/suthin_285" class="social-btn instagram" title="Instagram" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                
-                <!-- Github: แทนที่เครื่องหมาย # ด้วยลิงก์ Github ของคุณ -->
-                <a href="https://github.com/Suthin1248" class="social-btn github" title="GitHub" target="_blank">
-                    <i class="fab fa-github"></i>
-                </a>
+            <div class="section-header">
+                <div class="mac-btns">
+                    <div class="mac-btn close"></div>
+                    <div class="mac-btn min"></div>
+                    <div class="mac-btn max"></div>
+                </div>
+                <h2>~/contact-links.sh</h2>
+            </div>
+            <div class="section-content" style="text-align: center;">
+                <div class="social-links">
+                    <!-- Email -->
+                    <!-- แนะนำให้เปลี่ยนเป็น mailto: -->
+                    <a href="mailto:Suthin7039@gmail.com" class="social-btn email" title="ส่งอีเมลหาฉัน"
+                        target="_blank">
+                        <i class="fas fa-envelope"></i>
+                    </a>
 
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/suthin.chanidthai.5/" class="social-btn facebook" title="Facebook"
+                        target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+
+                    <!-- Line -->
+                    <a href="https://line.me/ti/p/0w7UWffuIp" class="social-btn line" title="Line" target="_blank">
+                        <i class="fab fa-line"></i>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/suthin_285" class="social-btn instagram" title="Instagram"
+                        target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                    <!-- Github -->
+                    <a href="https://github.com/Suthin1248" class="social-btn github" title="GitHub" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
             </div>
         </section>
     </div>
 
     <!-- ส่วนท้าย -->
     <footer>
-        <p>&copy; 2026 นายสุทิน ชะนิดไทย. All rights reserved.</p>
+        <p>console.log("&copy; 2026 Suthin Chanidthai. All rights reserved.");</p>
     </footer>
+
+    <!-- Script สำหรับระบบสลับโหมด Dark / Light -->
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+        const icon = themeToggleBtn.querySelector('i');
+
+        // ฟังก์ชันสลับโหมด
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+
+            // เปลี่ยนข้อความและไอคอนบนปุ่ม
+            if (body.classList.contains('dark-mode')) {
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i> โหมดสว่าง';
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i> โหมดมืด';
+            }
+        });
+    </script>
 
 </body>
 
